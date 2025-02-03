@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Disease Recognition</title>
+    <style>
+        /* Page Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('https://source.unsplash.com/1600x900/?apple,orchard') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);  /* Dark overlay */
+            z-index: -1; /* Keeps overlay behind the content */
+        }
+
+        /* Container Box */
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        /* Custom File Upload */
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 12px 20px;
+            cursor: pointer;
+            background: #ff5722;
+            color: white;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .custom-file-upload:hover {
+            background: #e64a19;
+        }
+
+        /* Button Styling */
+        .btn {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #45a049;
+        }
+
+        /* Image Preview */
+        #image-preview {
+            display: none;
+            width: 100%;
+            max-width: 200px;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Prediction Box */
+        .prediction {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍏 Apple Disease Recognition 🍎</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="custom-file-upload">Choose an Image</label>
+            <input id="file-upload" type="file" name="file" accept="image/*" onchange="previewImage(event)">
+            <br>
+            <img id="image-preview">
+            <br>
+            <button type="submit" class="btn">Upload & Predict</button>
+        </form>
+        {% if prediction %}
+            <p class="prediction">Prediction: {{ prediction }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const img = document.getElementById('image-preview');
+                img.src = reader.result;
+                img.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>

@@ -3,9 +3,11 @@ import numpy as np
 import tensorflow as tf
 import cv2
 from PIL import Image
+import os
 
+print(os.path.exists("/root/apple_disease_project/apple_disease_model.keras"))
 # Load trained model
-model = tf.keras.models.load_model("apple_disease_model.keras")
+model = tf.keras.models.load_model("/root/apple_disease_project/apple_disease_model.keras")
 
 # Define disease classes
 classes = ["Apple Black Rot", "Apple Cedar Rust", "Apple Scab"]
@@ -34,4 +36,4 @@ def predict():
     return render_template('index.html', prediction=result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
